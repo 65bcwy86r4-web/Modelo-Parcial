@@ -199,7 +199,7 @@ function renderQuiz() {
       </div>
       <div class="progress-bar"><div class="fill" style="width:${((idx) / total) * 100}%"></div></div>
       <p class="question-text">${q.n}. ${q.text}</p>
-      <div class="options">${optionsHtml}</div>
+      <div class="options${answered ? " answered" : ""}">${optionsHtml}</div>
       ${feedbackHtml}
       <div class="quiz-footer">
         <button class="btn btn-primary" id="nextBtn" ${answered ? "" : "disabled"}>

@@ -457,6 +457,7 @@ ul.theory-points li { margin-bottom: 10px; }
 .option-btn.is-correct {
   background: var(--correct-bg);
   border-color: var(--correct);
+  opacity: 1;
   animation: popIn 0.3s var(--ease) both;
 }
 
@@ -469,7 +470,16 @@ ul.theory-points li { margin-bottom: 10px; }
 .option-btn.is-incorrect {
   background: var(--incorrect-bg);
   border-color: var(--incorrect);
+  opacity: 1;
   animation: shake 0.4s var(--ease) both;
+}
+
+/* Once a question is answered, the unselected/neutral options should not
+   replay their entrance animation on re-render — only the chosen and
+   correct options animate, via the rules above. */
+.options.answered .option-btn:not(.is-correct):not(.is-incorrect) {
+  opacity: 1;
+  animation: none;
 }
 
 .option-btn.is-incorrect .letter {
