@@ -221,7 +221,7 @@ function renderQuiz() {
     btn.addEventListener("click", () => {
       if (state.answers[idx]) return;
       state.answers[idx] = btn.dataset.letter;
-      render();
+      revealAnswer(idx, q);
     });
   });
 
@@ -234,6 +234,34 @@ function renderQuiz() {
     }
     render();
   });
+}
+
+// Updates the already-rendered question in place (no full re-render) so
+// that only the answered option and the feedback box animate — the card,
+// question text and other options stay exactly as they are on screen.
+function revealAnswer(idx, q) {
+  const optionsEl = app.querySelector(".options");
+  const selectedLetter = state.answers[idx];
+  optionsEl.classList.add("answered");
+
+  optionsEl.querySelectorAll(".option-btn").forEach((btn) => {
+    const letter = btn.dataset.letter;
+    btn.disabled = true;
+    if (letter === q.correct) btn.classList.add("is-correct");
+    else if (letter === selectedLetter) btn.classList.add("is-incorrect");
+  });
+
+  const isOk = selectedLetter === q.correct;
+  const feedback = document.createElement("div");
+  feedback.className = `feedback ${isOk ? "ok" : "bad"}`;
+  feedback.innerHTML = `
+    <div class="verdict">${isOk ? "✅ ¡Correcto!" : "❌ Incorrecto — la respuesta correcta es " + q.correct}</div>
+    <div class="justification">${q.justification}</div>
+  `;
+  optionsEl.insertAdjacentElement("afterend", feedback);
+  renderMath(feedback);
+
+  document.getElementById("nextBtn").disabled = false;
 }
 
 /* ---------------- RESULTS ---------------- */
