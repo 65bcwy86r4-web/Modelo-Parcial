@@ -102,9 +102,9 @@ function renderReference() {
     <div class="card">
       <span class="section-label">Parte 1 · Ejercicio práctico</span>
       <h2>${p.title}</h2>
-      <p>${p.statement}</p>
+      ${p.statement}
       ${tableHtml}
-      <p>${p.payload}</p>
+      ${p.payload ? `<p>${p.payload}</p>` : ""}
       <ol class="asks">
         ${p.asks.map((a) => `<li>${a}</li>`).join("")}
       </ol>

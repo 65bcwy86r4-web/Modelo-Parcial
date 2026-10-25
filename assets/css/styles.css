@@ -324,6 +324,13 @@ ol.asks {
 
 ol.asks li { margin-bottom: 6px; }
 
+ul.data-list {
+  padding-left: 1.2em;
+  margin: 12px 0;
+}
+
+ul.data-list li { margin-bottom: 6px; }
+
 .resolution-box {
   margin-top: 16px;
   border: 1px dashed var(--border);
