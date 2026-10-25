@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Simuladores interactivos de Física 1: cuerpo rígido, rotación, péndulos, MAS y ondas mecánicas.">
+<title>Física 1 — Simuladores</title>
+<link rel="stylesheet" href="../assets/css/styles.css">
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<div class="app" id="app" style="max-width:1180px">
+
+<header class="site-header">
+  <a class="brand" href="../index.html"><span class="mark">F1</span> Física 1 — Simuladores</a>
+  <span class="badge">UTN FRH</span>
+</header>
+
+<nav class="units" aria-label="Unidades">
+  <div class="row" role="tablist">
+    <button role="tab" data-tab="cuerpo">Cuerpo rígido</button>
+    <button role="tab" data-tab="rotacion">Rotación</button>
+    <button role="tab" data-tab="pendulos">Péndulos</button>
+    <button role="tab" data-tab="mas">MAS</button>
+    <button role="tab" data-tab="ondas">Ondas</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ===================== CUERPO RÍGIDO ===================== -->
+<section class="panel" id="p-cuerpo" hidden>
+  <div class="unit-head">
+    <p class="eyebrow">Unidad · Cuerpo rígido</p>
+    <h2>Cinemática y equilibrio del cuerpo rígido</h2>
+    <p class="lede">Un cuerpo rígido es un sistema de partículas cuyas distancias mutuas no cambian. Su movimiento más general es la suma de una traslación de un punto de referencia y una rotación alrededor de un eje que pasa por ese punto.</p>
+  </div>
+  <div class="subnav">
+    <button data-sub="cinem">Cinemática</button>
+    <button data-sub="estat">Equilibrio estático</button>
+  </div>
+
+  <div class="sub" data-sub="cinem">
+    <div class="f1-grid">
+      <div class="sim">
+        <div class="seglabel">Tipo de movimiento</div>
+        <div class="seg" data-name="cr-tipo">
+          <button data-v="trasl" aria-pressed="true">Traslación pura</button>
+          <button data-v="rot">Rotación pura</button>
+          <button data-v="general">Rototraslación general</button>
+        </div>
+        <canvas id="cr-canvas"></canvas>
+        <div class="controls">
+          <div class="ctl"><label for="cr-v0">v₀ del punto de referencia <output for="cr-v0"></output></label><input type="range" id="cr-v0" min="0" max="3" step="0.1" value="1.5" data-unit=" m/s" data-dec="1"></div>
+          <div class="ctl"><label for="cr-w">Velocidad angular ω <output for="cr-w"></output></label><input type="range" id="cr-w" min="-3" max="3" step="0.1" value="1.5" data-unit=" rad/s" data-dec="1"></div>
+        </div>
+        <div class="readouts">
+          <div class="ro"><span>v en A</span><b id="cr-va">—</b></div>
+          <div class="ro"><span>v en B</span><b id="cr-vb">—</b></div>
+          <div class="ro"><span>v en C (CM)</span><b id="cr-vc">—</b></div>
+          <div class="ro"><span>CIR</span><b id="cr-cir">—</b></div>
+        </div>
+        <div class="f1-status" id="cr-status"></div>
+        <div class="legend"><span><i style="background:var(--f1-accent)"></i>Velocidad del punto</span><span><i style="background:var(--f1-accent2)"></i>Centro instantáneo de rotación (CIR)</span></div>
+      </div>
+      <div class="explain">
+        <div class="card">
+          <h3>Qué estás viendo</h3>
+          <p>Una placa rígida con tres puntos marcados (A, B y el centro de masa C). Cada punto se mueve según <span class="formula">v⃗ = v⃗₀ + ω⃗ × r⃗</span>, donde r⃗ es la posición del punto respecto del punto de referencia.</p>
+          <p style="margin-top:8px">En <b>traslación pura</b> (ω=0) todos los puntos tienen la misma velocidad. En <b>rotación pura</b> hay un punto del eje con velocidad nula. En el caso <b>general</b> existe, en cada instante, un punto de velocidad nula: el centro instantáneo de rotación (CIR).</p>
+        </div>
+        <div class="card">
+          <h3>Condición de rigidez</h3>
+          <p>La distancia entre dos puntos cualesquiera del sólido no cambia. Esto implica que la proyección de las velocidades de A y B sobre la recta que los une es la misma: ninguna fuerza interna puede estirar o comprimir el cuerpo.</p>
+        </div>
+        <div class="card">
+          <h3>Centro instantáneo de rotación (CIR)</h3>
+          <p>En el movimiento plano general no hay un punto que esté siempre en reposo, pero en cada instante existe un punto (real o de la extensión del cuerpo) con velocidad nula: el CIR. Todo el cuerpo, en ese instante, se comporta como si rotara puramente alrededor de él.</p>
+          <p class="note" style="margin-top:8px">Probalo: con ω y v₀ distintos de cero, fijate cómo se mueve el CIR al cambiar los controles. Si v₀=0 el CIR coincide con el punto de referencia; si ω=0, el CIR se va al infinito (traslación pura).</p>
+        </div>
+        <div class="exam">
+          <h3>Para el parcial</h3>
+          <ul>
+            <li>Condición de rigidez: la proyección de las velocidades de dos puntos sobre la recta que los une es igual.</li>
+            <li>Campo de velocidades: v⃗ = v⃗₀ + ω⃗ × r⃗ (también puede referirse al CM).</li>
+            <li>Traslación pura: mismo v y a en todos los puntos. Rotación pura: eje fijo con puntos de v=0.</li>
+            <li>CIR: punto de velocidad nula en el movimiento plano, distinto en cada instante.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub" data-sub="estat" hidden>
+    <div class="f1-grid">
+      <div class="sim">
+        <canvas id="es-canvas"></canvas>
+        <div class="controls">
+          <div class="ctl"><label for="es-x">Posición del peso (desde A) <output for="es-x"></output></label><input type="range" id="es-x" min="0" max="100" step="1" value="65" data-unit="%"></div>
+          <div class="ctl"><label for="es-w">Peso del cuerpo <output for="es-w"></output></label><input type="range" id="es-w" min="50" max="400" step="10" value="200" data-unit=" N"></div>
+          <div class="ctl"><label for="es-ang">Ángulo del cable en B <output for="es-ang"></output></label><input type="range" id="es-ang" min="20" max="90" step="1" value="60" data-unit="°"></div>
+        </div>
+        <div class="readouts">
+          <div class="ro"><span>Tensión del cable</span><b id="es-t">—</b></div>
+          <div class="ro"><span>Reacción horizontal en A</span><b id="es-ax">—</b></div>
+          <div class="ro"><span>Reacción vertical en A</span><b id="es-ay">—</b></div>
+        </div>
+        <div class="f1-status good" id="es-status">Sistema en equilibrio: ΣF = 0 y ΣM = 0.</div>
+      </div>
+      <div class="explain">
+        <div class="card">
+          <h3>Qué estás viendo</h3>
+          <p>Una barra articulada en A (bisagra: reacción con componentes Ax y Ay pero sin momento) sostenida por un cable en B. Un peso cuelga a una distancia ajustable del apoyo A. El sistema siempre está en equilibrio: lo que cambia son las reacciones necesarias para sostenerlo.</p>
+        </div>
+        <div class="card">
+          <h3>Las dos condiciones</h3>
+          <p class="ppt">Para que un cuerpo rígido esté en equilibrio estático deben cumplirse simultáneamente:</p>
+          <ul style="margin-top:8px">
+            <li><b>ΣF⃗ = 0</b>: el cuerpo no se traslada (a del CM = 0).</li>
+            <li><b>ΣM⃗ = 0</b>: el cuerpo no rota (α = 0), tomando momentos respecto de cualquier punto.</li>
+          </ul>
+          <p class="note" style="margin-top:8px">Tomar momentos respecto de A elimina del cálculo las reacciones Ax y Ay (su brazo de palanca es cero), y así se despeja directamente la tensión del cable.</p>
+        </div>
+        <div class="card">
+          <h3>Cómo se resuelve acá</h3>
+          <p>ΣM_A = 0 da la tensión T a partir del peso y las distancias. Luego ΣFx=0 y ΣFy=0 dan Ax y Ay. Movè el peso hacia B: la tensión necesaria aumenta porque el brazo de palanca del peso respecto de A crece.</p>
+        </div>
+        <div class="exam">
+          <h3>Para el parcial</h3>
+          <ul>
+            <li>Equilibrio estático: ΣF⃗ = 0 (no traslada) y ΣM⃗ = 0 respecto de cualquier punto (no rota).</li>
+            <li>Conviene tomar momentos en el punto donde hay más incógnitas de fuerza (ahí su momento se anula).</li>
+            <li>Una bisagra/articulación aporta reacción de fuerza (2 componentes) pero no momento.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ROTACIÓN ===================== -->
+<section class="panel" id="p-rotacion" hidden>
+  <div class="unit-head">
+    <p class="eyebrow">Unidad · Rotación</p>
+    <h2>Momento de inercia, momento angular y energía de rotación</h2>
+    <p class="lede">El momento de inercia mide la resistencia de un cuerpo a cambiar su estado de rotación, del mismo modo que la masa mide su resistencia a cambiar su traslación.</p>
+  </div>
+  <div class="subnav">
+    <button data-sub="inercia">Momento de inercia y Steiner</button>
+    <button data-sub="angular">Momento angular y dinámica</button>
+    <button data-sub="rodadura">Energía y rodadura</button>
+  </div>
+
+  <div class="sub" data-sub="inercia">
+    <div class="f1-grid">
+      <div class="sim">
+        <div class="seglabel">Forma</div>
+        <div class="seg" data-name="in-forma">
+          <button data-v="varilla" aria-pressed="true">Varilla</button>
+          <button data-v="disco">Disco</button>
+          <button data-v="aro">Aro</button>
+          <button data-v="esfera">Esfera maciza</button>
+          <button data-v="esferah">Esfera hueca</button>
+        </div>
+        <canvas id="in-canvas"></canvas>
+        <div class="controls">
+          <div class="ctl"><label for="in-m">Masa m <output for="in-m"></output></label><input type="range" id="in-m" min="0.5" max="10" step="0.1" value="2" data-unit=" kg" data-dec="1"></div>
+          <div class="ctl"><label for="in-r">Tamaño (R o L) <output for="in-r"></output></label><input type="range" id="in-r" min="0.1" max="1.5" step="0.05" value="0.6" data-unit=" m" data-dec="2"></div>
+          <div class="ctl"><label for="in-d">Distancia d (Steiner) <output for="in-d"></output></label><input type="range" id="in-d" min="0" max="1.5" step="0.05" value="0" data-unit=" m" data-dec="2"></div>
+        </div>
+        <div class="readouts">
+          <div class="ro"><span>I_CM</span><b id="in-icm">—</b></div>
+          <div class="ro"><span>I (eje a distancia d)</span><b id="in-id">—</b></div>
+        </div>
+        <div class="formula" id="in-formula">I_CM = …</div>
+      </div>
+      <div class="explain">
+        <div class="card">
+          <h3>Qué estás viendo</h3>
+          <p>El cuerpo con su eje de rotación por el centro de masa (línea llena) y un eje paralelo a distancia d (línea punteada). El momento de inercia depende de cómo está distribuida la masa respecto del eje elegido.</p>
+        </div>
+        <div class="card">
+          <h3>Teorema de Steiner (ejes paralelos)</h3>
+          <p class="ppt">Permite calcular el momento de inercia respecto de un eje arbitrario si se conoce el valor respecto de un eje paralelo que pasa por el CM:</p>
+          <p class="formula" style="margin-top:8px">I = I_CM + m·d²</p>
+          <p class="note" style="margin-top:8px">El momento de inercia es <b>mínimo</b> en el eje que pasa por el CM: cualquier eje paralelo desplazado una distancia d suma siempre m·d² (nunca resta).</p>
+        </div>
+        <div class="card">
+          <h3>Probalo</h3>
+          <p>Subí d con la varilla: I crece con el cuadrado de la distancia. Compará la esfera maciza (2/5 mR²) con la hueca (2/3 mR²): a igual masa y radio, la hueca tiene más inercia rotacional porque su masa está más lejos del eje.</p>
+        </div>
+        <div class="exam">
+          <h3>Para el parcial</h3>
+          <ul>
+            <li>I = Σ mᵢrᵢ² (discreto) o ∫r²dm (continuo); unidades kg·m².</li>
+            <li>Steiner: I = I_CM + m·d², válido solo entre ejes paralelos, uno de ellos por el CM.</li>
+            <li>Varilla (eje centro, ⊥): (1/12)mL². Disco/cilindro macizo: (1/2)mR². Aro: mR². Esfera maciza: (2/5)mR². Esfera hueca: (2/3)mR².</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub" data-sub="angular" hidden>
+    <div class="f1-grid">
+      <div class="sim">
+        <canvas id="an-canvas"></canvas>
+        <div class="controls">
+          <div class="ctl"><label for="an-f">Fuerza tangencial F <output for="an-f"></output></label><input type="range" id="an-f" min="0" max="50" step="1" value="20" data-unit=" N"></div>
+          <div class="ctl"><label for="an-r">Radio de aplicación r <output for="an-r"></output></label><input type="range" id="an-r" min="0.05" max="0.5" step="0.01" value="0.3" data-unit=" m" data-dec="2"></div>
+          <div class="ctl"><label for="an-i">Momento de inercia I <output for="an-i"></output></label><input type="range" id="an-i" min="0.1" max="5" step="0.1" value="1" data-unit=" kg·m²" data-dec="1"></div>
+          <div class="ctl" style="justify-content:flex-end"><button class="btn" id="an-reset" type="button">Reiniciar ω</button></div>
+        </div>
+        <div class="readouts">
+          <div class="ro"><span>Torque τ = r·F</span><b id="an-tau">—</b></div>
+          <div class="ro"><span>Aceleración angular α</span><b id="an-alfa">—</b></div>
+          <div class="ro"><span>ω actual</span><b id="an-w">—</b></div>
+          <div class="ro"><span>Momento angular L = Iω</span><b id="an-l">—</b></div>
+        </div>
+      </div>
+      <div class="explain">
+        <div class="card">
+          <h3>Qué estás viendo</h3>
+          <p>Un disco que puede girar libremente. Aplicás una fuerza tangencial F a una distancia r del eje: eso genera un torque τ = r×F que lo acelera angularmente, igual que una fuerza neta acelera linealmente a una masa.</p>
+        </div>
+        <div class="card">
+          <h3>Ecuación de movimiento de rotación</h3>
+          <p class="formula">τ = I·α</p>
+          <p style="margin-top:8px">Es el análogo rotacional de F = m·a. El momento de inercia I hace el papel de la masa: mide cuánto "cuesta" cambiar el estado de rotación.</p>
+        </div>
+        <div class="card">
+          <h3>Momento angular</h3>
+          <p>Para un cuerpo que rota respecto de un eje principal, L = I·ω. El torque neto es la razón de cambio de L: <span class="formula">τ = dL/dt</span>. Si no hay torque externo, L se conserva (por ejemplo, un patinador que recoge los brazos: baja I, sube ω para mantener L constante).</p>
+        </div>
+        <div class="exam">
+          <h3>Para el parcial</h3>
+          <ul>
+            <li>τ⃗ = r⃗ × F⃗; módulo τ = r·F·sen(θ).</li>
+            <li>Ecuación de rotación: τ_neto = I·α (análoga a F=ma).</li>
+            <li>L⃗ = I·ω⃗ (eje principal); conservación: si τ_neto=0, L=cte.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub" data-sub="rodadura" hidden>
+    <div class="f1-grid">
+      <div class="sim">
+        <div class="seglabel">Cuerpo que rueda</div>
+        <div class="seg" data-name="ro-forma">
+          <button data-v="aro" aria-pressed="true">Aro</button>
+          <button data-v="cilindro">Cilindro macizo</button>
+          <button data-v="esfera">Esfera maciza</button>
+        </div>
+        <canvas id="ro-canvas"></canvas>
+        <div class="controls">
+          <div class="ctl"><label for="ro-ang">Ángulo del plano β <output for="ro-ang"></output></label><input type="range" id="ro-ang" min="5" max="45" step="1" value="20" data-unit="°"></div>
+          <div class="ctl" style="justify-content:flex-end"><button class="btn primary" id="ro-play" type="button">Soltar</button></div>
+        </div>
+        <div class="readouts">
+          <div class="ro"><span>a_CM</span><b id="ro-a">—</b></div>
+          <div class="ro"><span>v_CM al llegar</span><b id="ro-v">—</b></div>
+          <div class="ro"><span>Energía traslación</span><b id="ro-ect">—</b></div>
+          <div class="ro"><span>Energía rotación</span><b id="ro-ecr">—</b></div>
+        </div>
+      </div>
+      <div class="explain">
+        <div class="card">
+          <h3>Qué estás viendo</h3>
+          <p>Un cuerpo que rueda sin deslizar por un plano inclinado. "Rodar sin deslizar" vincula la traslación y la rotación: v_CM = ω·R, a_CM = α·R. El punto de contacto con el plano tiene velocidad instantánea nula.</p>
+        </div>
+        <div class="card">
+          <h3>Reparto de energía</h3>
+          <p class="ppt">Al bajar, la energía potencial se reparte entre energía cinética de traslación y de rotación:</p>
+          <p class="formula" style="margin-top:8px">m·g·h = ½m·v² + ½I_CM·ω²</p>
+          <p class="note" style="margin-top:8px">Cuanto mayor es I_CM/(mR²) de la forma, más energía "se va" a rotación y menos queda para acelerar el centro de masa: por eso la esfera llega primero, después el cilindro, y el aro (toda su masa en el borde) último.</p>
+        </div>
+        <div class="card">
+          <h3>Rozamiento estático</h3>
+          <p>Para que haya rodadura sin deslizamiento tiene que existir rozamiento entre el cuerpo y el plano. Como el punto de contacto no desliza, ese rozamiento es estático y <b>no realiza trabajo</b>: por eso la energía mecánica se conserva en la rodadura ideal.</p>
+        </div>
+        <div class="exam">
+          <h3>Para el parcial</h3>
+          <ul>
+            <li>Condición de rodadura: v_CM = ωR, a_CM = αR.</li>
+            <li>mgh = ½mv² + ½I_CMω² (con v=ωR) da a_CM = g·senβ / (1 + I_CM/(mR²)).</li>
+            <li>A menor I_CM/(mR²), mayor aceleración: esfera &gt; cilindro &gt; aro.</li>
+            <li>El rozamiento en rodadura pura es estático y no disipa energía.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PÉNDULOS ===================== -->
+<section class="panel" id="p-pendulos" hidden>
+  <div class="unit-head">
+    <p class="eyebrow">Unidad · Péndulos</p>
+    <h2>Péndulo simple y péndulo físico</h2>
+    <p class="lede">Si las oscilaciones son pequeñas, ambos péndulos realizan un Movimiento Armónico Simple: su período no depende de la amplitud.</p>
+  </div>
+  <div class="subnav">
+    <button data-sub="simple">Péndulo simple</button>
+    <button data-sub="fisico">Péndulo físico</button>
+  </div>
+
+  <div class="sub" data-sub="simple">
+    <div class="f1-grid">
+      <div class="sim">
+        <canvas id="ps-canvas"></canvas>
+        <div class="controls">
+          <div class="ctl"><label for="ps-l">Longitud l <output for="ps-l"></output></label><input type="range" id="ps-l" min="0.2" max="2" step="0.05" value="1" data-unit=" m" data-dec="2"></div>
+          <div class="ctl"><label for="ps-a">Amplitud θ₀ <output for="ps-a"></output></label><input type="range" id="ps-a" min="2" max="20" step="1" value="12" data-unit="°"></div>
+        </div>
+        <div class="readouts">
+          <div class="ro"><span>Período T</span><b id="ps-t">—</b></div>
+          <div class="ro"><span>Frecuencia f</span><b id="ps-f">—</b></div>
+          <div class="ro"><span>ω</span><b id="ps-w">—</b></div>
+        </div>
+        <canvas id="ps-graph"></canvas>
+      </div>
+      <div class="explain">
+        <div class="card">
+          <h3>Qué estás viendo</h3>
+          <p>Un cuerpo puntual de masa m suspendido de una cuerda inextensible de longitud l y masa despreciable. Abajo, el gráfico de θ(t) durante la oscilación.</p>
+        </div>
+        <div class="card">
+          <h3>Deducción</h3>
+          <p>En la dirección tangencial, la fuerza neta es la componente del peso: −mg·sen(θ) = m·l·(d²θ/dt²). Para pequeñas oscilaciones, sen(θ)≈θ, y queda la ecuación del MAS:</p>
+          <p class="formula" style="margin-top:8px">d²θ/dt² + (g/l)·θ = 0</p>
+          <p class="note" style="margin-top:8px">de donde ω² = g/l y T = 2π√(l/g).</p>
+        </div>
+        <div class="exam">
+          <h3>Para el parcial</h3>
+          <ul>
+            <li>T = 2π√(l/g): depende solo de l y g, no de la masa ni de la amplitud (para ángulos chicos).</li>
+            <li>Válido en el régimen de pequeñas oscilaciones (sen θ ≈ θ).</li>
+            <li>Se usa para medir g en un lugar, midiendo T y l.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub" data-sub="fisico" hidden>
+    <div class="f1-grid">
+      <div class="sim">
+        <canvas id="pf-canvas"></canvas>
+        <div class="controls">
+          <div class="ctl"><label for="pf-l">Longitud de la varilla L <output for="pf-l"></output></label><input type="range" id="pf-l" min="0.5" max="2" step="0.05" value="1.2" data-unit=" m" data-dec="2"></div>
+          <div class="ctl"><label for="pf-d">Posición de la lenteja (disco) <output for="pf-d"></output></label><input type="range" id="pf-d" min="0.2" max="2" step="0.02" value="1.1" data-unit=" m" data-dec="2"></div>
+          <div class="ctl"><label for="pf-a">Amplitud θ₀ <output for="pf-a"></output></label><input type="range" id="pf-a" min="2" max="20" step="1" value="12" data-unit="°"></div>
+        </div>
+        <div class="readouts">
+          <div class="ro"><span>I_O (Steiner)</span><b id="pf-io">—</b></div>
+          <div class="ro"><span>Período T</span><b id="pf-t">—</b></div>
+          <div class="ro"><span>Longitud equiv. l_eq</span><b id="pf-leq">—</b></div>
+        </div>
+      </div>
+      <div class="explain">
+        <div class="card">
+          <h3>Qué estás viendo</h3>
+          <p>Un péndulo físico real: una varilla pivotada en un extremo, con una lenteja (disco) que podés deslizar a lo largo de ella, como en un reloj de péndulo. Al mover el disco cambiás tanto el momento de inercia total I_O como la posición del centro de masa del conjunto.</p>
+        </div>
+        <div class="card">
+          <h3>Deducción</h3>
+          <p>Tomando momentos respecto del pivote "o": −Mg·d·sen(θ) = I_O·(d²θ/dt²), con M la masa total y d la distancia del pivote al CM del conjunto. Para pequeñas oscilaciones queda la ecuación del MAS, con:</p>
+          <p class="formula" style="margin-top:8px">ω² = Mgd / I_O &nbsp;→&nbsp; T = 2π√(I_O / (Mgd))</p>
+          <p class="note" style="margin-top:8px">I_O = I_varilla,O + I_disco,O, donde la contribución del disco se calcula con Steiner: I_disco,O = m_disco·d_disco² (lo tratamos como masa puntual).</p>
+        </div>
+        <div class="card">
+          <h3>Longitud equivalente</h3>
+          <p>Todo péndulo físico tiene un péndulo simple "equivalente" con el mismo período: l_eq = I_O / (M·d). Probá acercar el disco al pivote: I_O baja, pero d también baja, y el período no cambia de forma obvia — por eso hay que calcularlo, no "sentirlo".</p>
+        </div>
+        <div class="exam">
+          <h3>Para el parcial</h3>
+          <ul>
+            <li>T = 2π√(I_O/(mgd)), con I_O por Steiner respecto del eje de suspensión.</li>
+            <li>d es la distancia del eje de rotación al centro de masa (no la longitud total del cuerpo).</li>
+            <li>Péndulo simple = caso particular con toda la masa concentrada en l=d.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MAS ===================== -->
+<section class="panel" id="p-mas" hidden>
+  <div class="unit-head">
+    <p class="eyebrow">Unidad · Movimiento Armónico Simple</p>
+    <h2>Cinemática, dinámica y energía del MAS</h2>
+    <p class="lede">El MAS aparece una y otra vez en física: resortes, péndulos, circuitos, vibraciones moleculares. Todos comparten la misma ecuación.</p>
+  </div>
+  <div class="subnav">
+    <button data-sub="cinem">Cinemática</button>
+    <button data-sub="dinam">Dinámica y Ley de Hooke</button>
+    <button data-sub="energ">Energía</button>
+  </div>
+
+  <div class="sub" data-sub="cinem">
+    <div class="f1-grid">
+      <div class="sim">
+        <canvas id="mc-canvas"></canvas>
+        <div class="controls">
+          <div class="ctl"><label for="mc-a">Amplitud A <output for="mc-a"></output></label><input type="range" id="mc-a" min="0.3" max="1.5" step="0.05" value="1" data-unit=" m" data-dec="2"></div>
+          <div class="ctl"><label for="mc-w">Pulsación ω <output for="mc-w"></output></label><input type="range" id="mc-w" min="0.5" max="4" step="0.1" value="2" data-unit=" rad/s" data-dec="1"></div>
+        </div>
+        <canvas id="mc-graph"></canvas>
+        <div class="legend"><span><i style="background:var(--f1-accent)"></i>Posición x(t)</span><span><i style="background:var(--f1-accent2)"></i>Velocidad v(t)</span></div>
+      </div>
+      <div class="explain">
+        <div class="card">
+          <h3>Qué estás viendo</h3>
+          <p>Un disco gira con velocidad angular constante ω; la sombra del clavo marcado proyecta sobre el eje horizontal un movimiento armónico simple. Es la forma más intuitiva de "ver" de dónde salen las ecuaciones del MAS.</p>
+        </div>
+        <div class="card">
+          <h3>Ecuaciones horarias</h3>
+          <p class="formula">x(t) = A·sen(ωt + α₀)</p>
+          <p class="formula" style="margin-top:6px">v(t) = Aω·cos(ωt + α₀)</p>
+          <p class="formula" style="margin-top:6px">a(t) = −Aω²·sen(ωt + α₀) = −ω²·x(t)</p>
+          <p class="note" style="margin-top:8px">La velocidad es máxima (Aω) cuando x=0; la aceleración es máxima (Aω²) en los extremos (x=±A), donde la velocidad es nula.</p>
+        </div>
+        <div class="exam">
+          <h3>Para el parcial</h3>
+          <ul>
+            <li>a(x) = −ω²x: la aceleración es proporcional y opuesta a la posición. Esta es la condición que define al MAS.</li>
+            <li>T = 2π/ω, f = 1/T = ω/(2π). No dependen de la amplitud.</li>
+            <li>v máxima en x=0; a máxima en x=±A.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub" data-sub="dinam" hidden>
+    <div class="f1-grid">
+      <div class="sim">
+        <canvas id="md-canvas"></canvas>
+        <div class="controls">
+          <div class="ctl"><label for="md-k">Constante elástica k <output for="md-k"></output></label><input type="range" id="md-k" min="5" max="100" step="1" value="40" data-unit=" N/m"></div>
+          <div class="ctl"><label for="md-m">Masa m <output for="md-m"></output></label><input type="range" id="md-m" min="0.2" max="3" step="0.1" value="1" data-unit=" kg" data-dec="1"></div>
+          <div class="ctl"><label for="md-x0">Elongación inicial <output for="md-x0"></output></label><input type="range" id="md-x0" min="0.1" max="0.4" step="0.01" value="0.25" data-unit=" m" data-dec="2"></div>
+        </div>
+        <div class="readouts">
+          <div class="ro"><span>Fuerza elástica F</span><b id="md-f">—</b></div>
+          <div class="ro"><span>ω = √(k/m)</span><b id="md-w">—</b></div>
+          <div class="ro"><span>Período T</span><b id="md-t">—</b></div>
+        </div>
+      </div>
+      <div class="explain">
+        <div class="card">
+          <h3>Qué estás viendo</h3>
+          <p>El sistema masa-resorte clásico. El bloque se suelta desde la elongación inicial y oscila libremente; la flecha muestra la fuerza elástica en cada instante.</p>
+        </div>
+        <div class="card">
+          <h3>Ley de Hooke</h3>
+          <p class="ppt">A mayor elongación, mayor fuerza elástica, siempre en sentido contrario al desplazamiento:</p>
+          <p class="formula" style="margin-top:8px">F⃗ = −k·x⃗</p>
+          <p style="margin-top:8px">Aplicando la 2ª ley de Newton, −kx = ma, y como a = d²x/dt², se obtiene la ecuación del MAS con <span class="formula">ω² = k/m</span>.</p>
+        </div>
+        <div class="card">
+          <h3>Qué pasa si cambiás k o m</h3>
+          <p>Un resorte más duro (k mayor) da ciclos más cortos (mayor ω, menor T). Una masa mayor da ciclos más largos. Ninguno de los dos cambia la amplitud: el período de un MAS es independiente de cuánto se estiró inicialmente el resorte.</p>
+        </div>
+        <div class="exam">
+          <h3>Para el parcial</h3>
+          <ul>
+            <li>F = −kx (Ley de Hooke); k en N/m.</li>
+            <li>ω = √(k/m); T = 2π√(m/k).</li>
+            <li>T no depende de la amplitud (isocronismo del MAS).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub" data-sub="energ" hidden>
+    <div class="f1-grid">
+      <div class="sim">
+        <canvas id="me-canvas"></canvas>
+        <div class="controls">
+          <div class="ctl"><label for="me-k">Constante elástica k <output for="me-k"></output></label><input type="range" id="me-k" min="5" max="100" step="1" value="40" data-unit=" N/m"></div>
+          <div class="ctl"><label for="me-a">Amplitud A <output for="me-a"></output></label><input type="range" id="me-a" min="0.1" max="0.4" step="0.01" value="0.3" data-unit=" m" data-dec="2"></div>
+        </div>
+        <div class="readouts">
+          <div class="ro"><span>Energía mecánica</span><b id="me-em">—</b></div>
+          <div class="ro"><span>E. potencial</span><b id="me-ep">—</b></div>
+          <div class="ro"><span>E. cinética</span><b id="me-ec">—</b></div>
+        </div>
+        <canvas id="me-graph"></canvas>
+        <div class="legend"><span><i style="background:var(--f1-accent2)"></i>E. potencial (½kx²)</span><span><i style="background:var(--f1-good)"></i>E. cinética</span><span><i style="background:var(--f1-muted)"></i>E. mecánica (cte.)</span></div>
+      </div>
+      <div class="explain">
+        <div class="card">
+          <h3>Qué estás viendo</h3>
+          <p>El punto rojo recorre el MAS mientras arriba se grafican las tres energías en función de la posición x. La barra de energía mecánica es horizontal porque se conserva.</p>
+        </div>
+        <div class="card">
+          <h3>Conservación de la energía</h3>
+          <p class="formula">E = ½m·v² + ½k·x² = ½k·A² = constante</p>
+          <p style="margin-top:8px">En los extremos (x=±A) toda la energía es potencial elástica y v=0. En el centro (x=0) toda la energía es cinética y v es máxima: v_max = A√(k/m) = Aω.</p>
+        </div>
+        <div class="card">
+          <h3>Probalo</h3>
+          <p>Subí la amplitud: la energía mecánica crece con A² (¡no linealmente!). La parábola de energía potencial se vuelve más ancha, pero el punto donde EC=EP sigue estando en x = ±A/√2.</p>
+        </div>
+        <div class="exam">
+          <h3>Para el parcial</h3>
+          <ul>
+            <li>E_mecánica = ½kA² = ½mv_max² (constante durante todo el movimiento).</li>
+            <li>E_potencial = ½kx²; E_cinética = ½mv² = E − E_potencial.</li>
+            <li>v(x) = ±√((k/m)(A²−x²)); v_max en x=0.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ONDAS ===================== -->
+<section class="panel" id="p-ondas" hidden>
+  <div class="unit-head">
+    <p class="eyebrow">Unidad · Ondas mecánicas</p>
+    <h2>Función de onda, propagación y ondas estacionarias</h2>
+    <p class="lede">Una onda mecánica transporta energía y cantidad de movimiento a través de un medio sin que el medio mismo viaje con ella.</p>
+  </div>
+  <div class="subnav">
+    <button data-sub="viajera">Ondas mecánicas</button>
+    <button data-sub="estac">Ondas estacionarias</button>
+  </div>
+
+  <div class="sub" data-sub="viajera">
+    <div class="f1-grid">
+      <div class="sim">
+        <div class="seglabel">Tipo de onda</div>
+        <div class="seg" data-name="ov-tipo">
+          <button data-v="transversal" aria-pressed="true">Transversal</button>
+          <button data-v="longitudinal">Longitudinal</button>
+        </div>
+        <canvas id="ov-canvas"></canvas>
+        <div class="controls">
+          <div class="ctl"><label for="ov-a">Amplitud A <output for="ov-a"></output></label><input type="range" id="ov-a" min="0.2" max="1" step="0.05" value="0.6" data-unit=" m" data-dec="2"></div>
+          <div class="ctl"><label for="ov-lam">Longitud de onda λ <output for="ov-lam"></output></label><input type="range" id="ov-lam" min="1" max="6" step="0.1" value="3" data-unit=" m" data-dec="1"></div>
+          <div class="ctl"><label for="ov-v">Rapidez de propagación v <output for="ov-v"></output></label><input type="range" id="ov-v" min="0.5" max="4" step="0.1" value="2" data-unit=" m/s" data-dec="1"></div>
+        </div>
+        <div class="readouts">
+          <div class="ro"><span>Período T = λ/v</span><b id="ov-t">—</b></div>
+          <div class="ro"><span>Frecuencia f</span><b id="ov-f">—</b></div>
+          <div class="ro"><span>Número de onda k</span><b id="ov-k">—</b></div>
+          <div class="ro"><span>Frec. angular ω</span><b id="ov-w">—</b></div>
+        </div>
+      </div>
+      <div class="explain">
+        <div class="card">
+          <h3>Qué estás viendo</h3>
+          <p>La función de onda sinusoidal y(x,t) = A·sen(kx − ωt) propagándose. En el modo transversal, los elementos del medio (los puntos de la cuerda) se mueven perpendicular a la propagación; en el longitudinal, en paralelo (como un resorte).</p>
+        </div>
+        <div class="card">
+          <h3>Parámetros de la onda</h3>
+          <p>Cresta y valle, longitud de onda λ (distancia entre crestas), período T (tiempo entre dos crestas en un punto fijo) y amplitud A (máximo desplazamiento).</p>
+          <p class="formula" style="margin-top:8px">v = λ/T = λ·f &nbsp;&nbsp; k = 2π/λ &nbsp;&nbsp; ω = 2π/T = 2π·f &nbsp;&nbsp; v = ω/k</p>
+        </div>
+        <div class="card">
+          <h3>Movimiento de un punto de la cuerda</h3>
+          <p>Cada elemento de la cuerda, aunque la onda viaje en x, oscila con MAS en y: v_y = ∂y/∂t, con v_y máxima = Aω cuando y=0. No confundir la rapidez de la onda (v) con la rapidez transversal de un punto (v_y).</p>
+        </div>
+        <div class="exam">
+          <h3>Para el parcial</h3>
+          <ul>
+            <li>y(x,t) = A·sen(kx − ωt + φ); k = 2π/λ; ω = 2π/T.</li>
+            <li>v = λ/T = ω/k (rapidez de la onda, distinta de v_y del medio).</li>
+            <li>Transversal: el medio se mueve ⊥ a la propagación. Longitudinal: en la misma dirección.</li>
+            <li>Rapidez en una cuerda: v = √(T_ension/μ), con μ = masa por unidad de longitud.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub" data-sub="estac" hidden>
+    <div class="f1-grid">
+      <div class="sim">
+        <canvas id="oe-canvas"></canvas>
+        <div class="controls">
+          <div class="ctl"><label for="oe-n">Modo normal n <output for="oe-n"></output></label><input type="range" id="oe-n" min="1" max="6" step="1" value="2"></div>
+          <div class="ctl"><label for="oe-v">Rapidez de onda v <output for="oe-v"></output></label><input type="range" id="oe-v" min="1" max="8" step="0.2" value="4" data-unit=" m/s" data-dec="1"></div>
+        </div>
+        <div class="readouts">
+          <div class="ro"><span>Longitud de onda λₙ = 2L/n</span><b id="oe-lam">—</b></div>
+          <div class="ro"><span>Frecuencia fₙ = n·v/(2L)</span><b id="oe-f">—</b></div>
+          <div class="ro"><span>Nodos (sin extremos)</span><b id="oe-nodos">—</b></div>
+        </div>
+      </div>
+      <div class="explain">
+        <div class="card">
+          <h3>Qué estás viendo</h3>
+          <p>Una cuerda de longitud L fija en ambos extremos, como una cuerda de guitarra. Se superponen la onda incidente y la reflejada formando un patrón que no se desplaza: una onda estacionaria. Los puntos rojos marcan los nodos (amplitud cero) y los verdes los antinodos (amplitud máxima).</p>
+        </div>
+        <div class="card">
+          <h3>Modos normales</h3>
+          <p class="ppt">Como los extremos están fijos (son nodos por definición), solo son posibles ciertos patrones discretos, llamados modos normales:</p>
+          <p class="formula" style="margin-top:8px">λₙ = 2L/n &nbsp;&nbsp; fₙ = n·v/(2L) = n·f₁</p>
+          <p class="note" style="margin-top:8px">f₁ (n=1) es la frecuencia fundamental; las demás son múltiplos enteros, los armónicos.</p>
+        </div>
+        <div class="card">
+          <h3>Probalo</h3>
+          <p>Subí n: aparecen más nodos y antinodos, y la frecuencia sube en múltiplos de f₁. La velocidad de onda v = √(T_ension/μ), así que una cuerda más tensa (o más liviana) suena más agudo.</p>
+        </div>
+        <div class="exam">
+          <h3>Para el parcial</h3>
+          <ul>
+            <li>Onda estacionaria: superposición de dos ondas idénticas viajando en sentidos opuestos.</li>
+            <li>Nodos: amplitud 0, separados λ/2. Antinodos: amplitud máxima (2A), entre nodos consecutivos.</li>
+            <li>Cuerda fija en ambos extremos: λₙ=2L/n, fₙ=n·v/(2L), n=1,2,3,…</li>
+            <li>f₁ = frecuencia fundamental; fₙ = n·f₁ son los armónicos.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">Simuladores de Física 1 — UTN FRH. Modelos didácticos simplificados, no sirven para dimensionar.</footer>
+</div>
+
+<script src="js/nucleo.js"></script>
+<script src="js/cuerpo-rigido.js"></script>
+<script src="js/rotacion.js"></script>
+<script src="js/pendulos.js"></script>
+<script src="js/mas.js"></script>
+<script src="js/ondas.js"></script>
+<script src="js/inicio.js"></script>
+</body>
+</html>
