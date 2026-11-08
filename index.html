@@ -3,19 +3,41 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Modelo de Parcial — Recuperatorio U6-U14</title>
-<meta name="description" content="Quiz interactivo de los modelos de parcial del Recuperatorio del Segundo Parcial de Conocimientos Aeronáuticos y Espaciales 1." />
+<title>UTN FRH — Material de estudio</title>
+<meta name="description" content="Simuladores y modelos de parcial interactivos para materias de la UTN FRH." />
 
-<link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
 <link rel="stylesheet" href="assets/css/styles.css" />
+<style>
+  .model-card.as-link { display: block; text-decoration: none; }
+  .model-card .emoji { font-size: 1.6rem; line-height: 1; display: inline-grid; place-items: center; width: 36px; height: 36px; margin-bottom: 12px; }
+</style>
 </head>
 <body>
-<div class="app" id="app"></div>
+<div class="app" id="app">
+  <header class="site-header">
+    <div class="brand"><span class="mark">UTN</span> FRH — Material de estudio</div>
+  </header>
 
-<script defer src="assets/vendor/katex/katex.min.js"></script>
-<script defer src="assets/vendor/katex/auto-render.min.js"></script>
+  <div class="card hero">
+    <h1>¿Qué querés repasar?</h1>
+    <p>Elegí una materia para entrar a sus simuladores y modelos de práctica.</p>
+    <div class="model-grid" style="grid-template-columns: 1fr; max-width: 560px; margin: 0 auto;">
+      <a class="model-card as-link" href="fisica1/index.html" style="animation-delay:0ms">
+        <span class="emoji">🌀</span>
+        <span class="tag">Nuevo</span>
+        <h3>Física 1</h3>
+        <p>Simuladores interactivos de cuerpo rígido, rotación, péndulos, MAS y ondas mecánicas.</p>
+      </a>
+      <a class="model-card as-link" href="cae1/index.html" style="animation-delay:70ms">
+        <span class="emoji">✈️</span>
+        <span class="tag">CAyE 1 · U6-U14</span>
+        <h3>Conocimientos Aeronáuticos y Espaciales 1</h3>
+        <p>Modelos de parcial del Recuperatorio del Segundo Parcial, con ejercicio práctico, teoría y cuestionario multiple choice.</p>
+      </a>
+    </div>
+  </div>
 
-<script src="assets/js/data.js"></script>
-<script src="assets/js/app.js"></script>
+  <footer class="site-footer">Material de práctica — UTN FRH</footer>
+</div>
 </body>
 </html>

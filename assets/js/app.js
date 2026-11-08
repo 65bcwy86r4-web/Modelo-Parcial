@@ -30,7 +30,7 @@ function escapeIfNeeded(str) {
 function header() {
   return `
     <header class="site-header">
-      <div class="brand"><span class="mark">AE</span> Modelo de Parcial</div>
+      <a class="brand" href="../index.html"><span class="mark">AE</span> Modelo de Parcial</a>
       <span class="badge">CAyE 1 · U6-U14</span>
     </header>
   `;
