@@ -60,10 +60,19 @@ function renderHome() {
         ).join("")}
       </div>
     </div>
+    <div class="card">
+      <span class="section-label">Teoría</span>
+      <a class="model-card as-link apuntes-card" href="apuntes.html">
+        <span class="num">📖</span>
+        <span class="tag">18 temas · U6-U14</span>
+        <h3>Apuntes</h3>
+        <p>Apunte teórico completo para estudiar, un tema por pestaña, con esquemas y gráficos interactivos.</p>
+      </a>
+    </div>
     ${footer()}
   `;
 
-  app.querySelectorAll(".model-card").forEach((btn) => {
+  app.querySelectorAll("button.model-card").forEach((btn) => {
     btn.addEventListener("click", () => {
       state.modelId = Number(btn.dataset.model);
       state.answers = {};

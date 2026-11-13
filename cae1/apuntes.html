@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Apuntes — CAyE 1 (U6-U14)</title>
+<meta name="description" content="Apunte teórico de Conocimientos Aeronáuticos y Espaciales 1, Segundo Parcial (Unidades 6 a 14), con esquemas y gráficos interactivos." />
+
+<link rel="stylesheet" href="../assets/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="../assets/css/styles.css" />
+<link rel="stylesheet" href="apuntes/apuntes.css" />
+</head>
+<body>
+<div class="app wide" id="app">
+  <header class="site-header">
+    <a class="brand" href="index.html"><span class="mark">AE</span> Apuntes CAyE 1</a>
+    <span class="badge">Segundo parcial · U6-U14</span>
+  </header>
+
+  <div class="ap-layout">
+    <aside class="ap-side" id="side">
+      <button class="ap-side-toggle" id="sideToggle" aria-expanded="false">
+        <span class="lbl">Temas</span><span class="cur" id="sideCur"></span><span class="chev">▾</span>
+      </button>
+      <nav class="ap-nav" id="nav" aria-label="Temas del apunte"></nav>
+    </aside>
+
+    <main class="ap-main" id="main" tabindex="-1"></main>
+  </div>
+
+  <footer class="site-footer">Apunte teórico — Conocimientos Aeronáuticos y Espaciales 1 · UTN FRH</footer>
+</div>
+
+<script defer src="../assets/vendor/katex/katex.min.js"></script>
+<script defer src="../assets/vendor/katex/auto-render.min.js"></script>
+
+<script defer src="apuntes/contenido.js"></script>
+<script defer src="apuntes/figuras-base.js"></script>
+<script defer src="apuntes/figuras-espacio.js"></script>
+<script defer src="apuntes/figuras-tierra.js"></script>
+<script defer src="apuntes/figuras-aero.js"></script>
+<script defer src="apuntes/figuras-control.js"></script>
+<script defer src="apuntes/app.js"></script>
+</body>
+</html>
