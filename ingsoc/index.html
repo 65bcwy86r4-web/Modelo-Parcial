@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Modelo de Parcial — Ingeniería y Sociedad</title>
+<meta name="description" content="Modelos de parcial de Ingeniería y Sociedad: preguntas a desarrollar con guía de respuesta y cuestionarios multiple choice." />
+
+<link rel="stylesheet" href="../assets/css/styles.css" />
+<style>
+  .dev-item { padding: 16px 0; border-top: 1px solid var(--border); }
+  .dev-item:first-of-type { border-top: 0; padding-top: 4px; }
+  .dev-item .dev-q { display: flex; gap: 12px; margin: 0; font-weight: 600; line-height: 1.5; }
+  .dev-item .dev-q .qn {
+    flex: 0 0 auto; display: inline-grid; place-items: center;
+    min-width: 30px; height: 26px; padding: 0 6px; border-radius: 8px;
+    background: var(--accent-dim); color: var(--accent-light); font-size: 0.8rem; font-weight: 800;
+  }
+  .dev-item .resolution-box { margin-top: 12px; }
+  .resolution-box .inner ul { padding-left: 1.2em; margin: 0; }
+  .resolution-box .inner li { margin-bottom: 8px; line-height: 1.55; }
+  .dev-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 4px; }
+  .dev-head .section-label { margin: 0; }
+  .card h2 a { color: inherit; text-decoration: none; }
+  .card h2 a:hover { color: var(--accent-light); }
+  a.wl { color: var(--accent-light); text-underline-offset: 3px; }
+  .justification p { margin: 6px 0; }
+  .justification p.src, p.src { color: var(--text-dim); font-size: 0.86rem; }
+  .justification mark { background: none; color: inherit; }
+  .option-btn .letter { text-transform: lowercase; }
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
